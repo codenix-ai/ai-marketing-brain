@@ -56,7 +56,7 @@ async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   });
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(err || `HTTP ${res.status}`);
+    throw new Error(err || `HTTP ${res.status} for ${path}`);
   }
   return res.json() as Promise<T>;
 }

@@ -32,7 +32,7 @@ function HistoryContent() {
   const handleFavorite = async (id: string) => {
     await api.toggleFavorite(id);
     setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, isFavorite: true } : item))
+      prev.map((item) => (item.id === id ? { ...item, isFavorite: !item.isFavorite } : item))
     );
   };
 

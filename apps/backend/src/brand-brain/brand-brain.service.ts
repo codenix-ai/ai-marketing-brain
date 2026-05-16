@@ -59,8 +59,8 @@ ${brain.brandVoice}
 - Contexto cultural: Mercado latinoamericano, especialmente Colombia.
 
 ## Reglas estrictas
-- NUNCA uses estas palabras: ${brain.forbiddenWords.join(', ')}
-- NO menciones a estos competidores: ${brain.competitors.join(', ')}
+- NUNCA uses estas palabras: ${brain.forbiddenWords?.join(', ') || 'ninguna'}
+- NO menciones a estos competidores: ${brain.competitors?.join(', ') || 'ninguno'}
 - Mantén SIEMPRE el tono definido arriba
 - Todo el contenido debe ser en ${brain.language}
 

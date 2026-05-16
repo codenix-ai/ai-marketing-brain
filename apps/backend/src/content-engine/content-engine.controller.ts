@@ -67,10 +67,14 @@ export class MarketingController {
 
   // PATCH /marketing/history/:id/favorite
   @Patch('history/:id/favorite')
-  toggleFavorite(@Param('id') id: string) {
+  async toggleFavorite(@Param('id') id: string) {
+    const current = await this.prisma.generatedContent.findUniqueOrThrow({
+      where: { id },
+      select: { isFavorite: true },
+    });
     return this.prisma.generatedContent.update({
       where: { id },
-      data: { isFavorite: true },
+      data: { isFavorite: !current.isFavorite },
     });
   }
 }

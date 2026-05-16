@@ -100,7 +100,8 @@ export class ContentEngineService {
   }
 
   private estimateCost(tokens: number): string {
-    // Claude Sonnet 4: ~$3 per 1M input + $15 per 1M output (approx mixed)
+    // Claude Sonnet 4: ~$3/1M input + $15/1M output tokens
+    // Using $9/1M as a blended average rate (roughly 50/50 mix)
     const usd = (tokens / 1_000_000) * 9;
     return `$${usd.toFixed(4)} USD`;
   }

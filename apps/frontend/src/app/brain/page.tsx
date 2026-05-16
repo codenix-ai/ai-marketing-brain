@@ -21,7 +21,9 @@ function BrainConfigContent() {
         if (brain) setSelected(brain);
       }
     }).catch(console.error);
-  // initialSlug is stable from searchParams, intentionally not re-running on its change
+  // The effect runs once on mount to load brains and set the initial selection.
+  // Re-running when initialSlug changes is not needed because it comes from
+  // static search params and does not change after mount.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
