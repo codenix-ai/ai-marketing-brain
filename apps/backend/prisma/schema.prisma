@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BrandBrain {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String
+
+  brandVoice     String @db.Text
+  targetAudience String @db.Text
+  mainProduct    String @db.Text
+  uniqueValue    String @db.Text
+  tone           String
+  language       String @default("es")
+  country        String @default("CO")
+
+  forbiddenWords String[]
+  competitors    String[]
+
+  contentExamples Json @default("[]")
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  generatedContent GeneratedContent[]
+}
+
+model MarketingTask {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  category    String
+  label       String
+  description String
+  icon        String
+
+  systemPrompt String @db.Text
+  userPrompt   String @db.Text
+
+  maxTokens   Int   @default(2000)
+  temperature Float @default(0.7)
+
+  inputFields Json
+
+  isActive  Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model GeneratedContent {
+  id           String @id @default(cuid())
+  brandBrainId String
+  taskSlug     String
+  taskLabel    String
+
+  userInputs Json
+
+  content    String @db.Text
+  tokensUsed Int
+  model      String
+
+  isFavorite  Boolean  @default(false)
+  isPublished Boolean  @default(false)
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  brandBrain BrandBrain @relation(fields: [brandBrainId], references: [id])
+}
